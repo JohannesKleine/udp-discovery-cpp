@@ -1,0 +1,29 @@
+version: 1.0.{build}
+
+clone_folder: C:\a\udp-discovery-cpp
+
+environment:
+
+  APPVEYOR_RDP_PASSWORD: '*Bmor34nC+(sp44'
+
+build_script:
+
+- sh: >-
+
+    cd C:\a\udp-discovery-cpp
+
+
+
+    mkdir build
+
+
+
+    cd build
+
+
+
+    cmake -DBUILD_EXAMPLE=ON -DBUILD_TOOL=ON ..
+
+
+
+    make
