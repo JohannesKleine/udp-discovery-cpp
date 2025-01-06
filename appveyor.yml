@@ -5,8 +5,16 @@ init:
 - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 environment:
   APPVEYOR_RDP_PASSWORD: '*Bmor34nC+(sp44'
+  global:
+## Qt: https://www.appveyor.com/docs/installed-software#qt
+#    QTDIR: C:\Qt\5.10.1\mingw53_32
+    MSYS2_ARCH: i686
+    TARGET: i686_32-pc-msys
+    MINGW_PREFIX: C:\msys64\mingw32
 build_script:
 - cmd: >-
+    C:\msys64\autorebase.bat
+
     cd C:\a\udp-discovery-cpp
 
     mkdir build
@@ -15,7 +23,7 @@ build_script:
 
     cmake -DBUILD_EXAMPLE=ON -DBUILD_TOOL=ON ..
 
-    make
+    cmake --build ./
 on_failure:
 - ps: >-
     #To get RDP running after compiling
