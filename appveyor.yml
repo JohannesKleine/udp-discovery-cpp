@@ -1,29 +1,28 @@
 version: 1.0.{build}
-
+image: Visual Studio 2019
 clone_folder: C:\a\udp-discovery-cpp
-
+init:
+- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 environment:
-
   APPVEYOR_RDP_PASSWORD: '*Bmor34nC+(sp44'
-
 build_script:
-
-- sh: >-
-
+- cmd: >-
     cd C:\a\udp-discovery-cpp
-
-
 
     mkdir build
 
-
-
     cd build
-
-
 
     cmake -DBUILD_EXAMPLE=ON -DBUILD_TOOL=ON ..
 
-
-
     make
+on_failure:
+- ps: >-
+    #To get RDP running after compiling
+
+    $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+on_finish:
+- ps: >-
+    #To get RDP running after compiling
+
+    $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
